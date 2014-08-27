@@ -1,5 +1,7 @@
 # AngularJS Phone Catalog Tutorial Application
 
+[![Build Status](https://travis-ci.org/weed/angular-phonecat_140814.svg?branch=my-master)](https://travis-ci.org/weed/angular-phonecat_140814)
+
 ## Overview
 
 This application takes the developer through the process of building a web-application using
