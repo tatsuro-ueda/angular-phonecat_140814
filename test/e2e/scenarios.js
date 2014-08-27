@@ -13,6 +13,15 @@ describe('PhoneCat App', function() {
 
     it('should filter the phone list as user types into the search box', function() {
 
+      /*
+       ElementArrayFinder
+       Use as: element.all(locator)
+       ElementArrayFinder is used for operations on an array of elements (as opposed to a single element).
+       ElementArrayFinderは、エレメントの配列の操作のために使われる
+       （エレメントが一つだけの場合と区別される）
+       https://github.com/angular/protractor/blob/master/lib/protractor.js#L69
+       */
+
       var phoneList = element.all(by.repeater('phone in phones'));
       var query = element(by.model('query'));
 
