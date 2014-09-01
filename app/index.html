@@ -23,7 +23,7 @@
         <!--Body content-->
 
         <ul class="phones">
-          <li ng-repeat="phone in phones | filter:query">
+          <li ng-repeat="phone in phones | filter:isLong">
             {{phone.name}}
             <p>{{phone.snippet}}</p>
           </li>

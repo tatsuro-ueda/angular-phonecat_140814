@@ -18,4 +18,8 @@ phonecatApp.controller('PhoneListCtrl', function ($scope) {
      'snippet': 'The Next, Next Generation tablet.'}
   ];
   $scope.name = "World";
+  $scope.isLong = function(phone) {
+  	var n = phone.name.length;
+  	return ( n > 7);
+  };
 });
