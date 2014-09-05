@@ -80,13 +80,33 @@
         query.sendKeys('motorola');
         return expect(phoneList.count()).toBe(2);
       });
-      return it('should display the current filter value in the title bar', function() {
+      it('should display the current filter value in the title bar', function() {
         var query;
         query = element(by.model('query'));
         query.clear();
         expect(browser.getTitle()).toMatch(/Google Phone Gallery:\s*$/);
         query.sendKeys('nexus');
         return expect(browser.getTitle()).toMatch(/Google Phone Gallery: nexus$/);
+      });
+      return it('should be possible to control phone order via the drop down select box', function() {
+
+        /*
+        Returns a promise that resolves to an array of WebElements from a column
+          var ages = element.all(by.repeater('cat in pets').column('{{cat.age}}'));
+          catのage属性を並べた配列を返す
+         */
+        var getNames, phoneNameColumn, query;
+        phoneNameColumn = element.all(By.repeater('phone in phones').column('{{phone.name}}'));
+        query = element(By.model('query'));
+        getNames = function() {
+          return phoneNameColumn.map(function(elm) {
+            return elm.getText();
+          });
+        };
+        query.sendKeys('tablet');
+        expect(getNames()).toEqual(["Motorola XOOM\u2122 with Wi-Fi", "MOTOROLA XOOM\u2122"]);
+        element(By.model('orderProp')).element(By.css('option[value="name"]')).click();
+        return expect(getNames()).toEqual(["MOTOROLA XOOM\u2122", "Motorola XOOM\u2122 with Wi-Fi"]);
       });
     });
   });

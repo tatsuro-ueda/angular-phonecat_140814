@@ -94,3 +94,30 @@ describe 'PhoneCat App', ->
 
       query.sendKeys( 'nexus' )
       expect( browser.getTitle() ).toMatch( /Google Phone Gallery: nexus$/ )
+
+    it 'should be possible to control phone order via the drop down select box', ->
+
+      ###
+      Returns a promise that resolves to an array of WebElements from a column
+        var ages = element.all(by.repeater('cat in pets').column('{{cat.age}}'));
+        catのage属性を並べた配列を返す
+      ###
+      phoneNameColumn = element.all By.repeater( 'phone in phones' ).column( '{{phone.name}}' )
+      query = element By.model( 'query' )
+
+      getNames = ->
+        phoneNameColumn.map( ( elm )-> elm.getText() )
+
+      query.sendKeys( 'tablet' ) #let's narrow the dataset to make the test assertions shorter
+
+      # 'tablet'でフィルタすると以下の二つが残る
+      expect( getNames() ).toEqual([
+        "Motorola XOOM\u2122 with Wi-Fi", "MOTOROLA XOOM\u2122"
+      ])
+
+      element(By.model( 'orderProp' )).element(By.css( 'option[value="name"]' )).click();
+
+      # さらにnameでソートすると以下の順番になる
+      expect( getNames() ).toEqual([
+        "MOTOROLA XOOM\u2122", "Motorola XOOM\u2122 with Wi-Fi"
+      ])
