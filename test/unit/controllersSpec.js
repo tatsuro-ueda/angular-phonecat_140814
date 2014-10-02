@@ -2,21 +2,35 @@
 (function() {
   describe('PhoneCat controllers', function() {
     return describe('PhoneListCtrl', function() {
-      var ctrl, scope;
+      var $httpBackend, ctrl, scope;
       scope = null;
       ctrl = null;
+      $httpBackend = null;
       beforeEach(module('phonecatApp'));
-      beforeEach(inject(function($controller) {
-        scope = {};
+      beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+        $httpBackend = _$httpBackend_;
+        $httpBackend.expectGET('phones/phones.json').respond([
+          {
+            name: 'Nexus S'
+          }, {
+            name: 'Motorola DROID'
+          }
+        ]);
+        scope = $rootScope.$new();
         return ctrl = $controller('PhoneListCtrl', {
           $scope: scope
         });
       }));
-      it('should create "phones" model with 3 phones', function() {
-        return expect(scope.phones.length).toBe(3);
-      });
-      return it('should set the default value of orderProp model', function() {
-        return expect(scope.orderProp).toBe('age');
+      return it('should create "phones" model with 2 phones fetched from xhr', function() {
+        expect(scope.phones).toBeUndefined();
+        $httpBackend.flush;
+        return expect(scope.phones).toEqual([
+          {
+            name: 'Nexus S'
+          }, {
+            name: 'Motorola DROID'
+          }
+        ]);
       });
     });
   });
