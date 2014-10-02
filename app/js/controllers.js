@@ -8,7 +8,13 @@ var phonecatApp = angular.module('phonecatApp', []);
 phonecatAppモジュールに、PhoneListCtrlというcontrollerを生やす
 $scopeは、PhoneListCtrlという名のcontrollerのスコープ
 */
-phonecatApp.controller('PhoneListCtrl', function ($scope) {
+phonecatApp.controller('PhoneListCtrl', function ($scope, $http) {
+
+  $http.get('phones/phones.json').success(function(data){
+    $scope.phones = data;
+  });
+  
+  /*
   $scope.phones = [
     {'name': 'Nexus S',
      'snippet': 'Fast just got faster with Nexus S.',
@@ -20,6 +26,7 @@ phonecatApp.controller('PhoneListCtrl', function ($scope) {
      'snippet': 'The Next, Next Generation tablet.',
       'age': 3}
   ];
+   */
 
   /*
    実験
